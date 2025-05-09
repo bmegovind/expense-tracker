@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@netlify/identity-widget@1.9.0/build/identity-widget.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Expense Tracker</h1>
+            <p>Track and manage your expenses</p>
+            <div id="auth-status" class="auth-status">
+                <span id="user-email"></span>
+                <button id="auth-button" class="btn btn-auth">Login</button>
+            </div>
+        </header>
+
+        <main id="app-content" class="hidden">
+            <!-- Expense Entry Form -->
+            <section class="entry-form">
+                <h2>Add New Expense</h2>
+                <form id="expense-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="from">From</label>
+                            <input type="text" id="from" placeholder="Location">
+                        </div>
+                        <div class="form-group">
+                            <label for="to">To</label>
+                            <input type="text" id="to" placeholder="Location">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="mode">Mode of Transport</label>
+                            <select id="mode">
+                                <option value="">Select</option>
+                                <option value="AUTO">Auto</option>
+                                <option value="METRO">Metro</option>
+                                <option value="TAXI">Taxi</option>
+                                <option value="TRAIN">Train</option>
+                                <option value="BUS">Bus</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer">Customer Name</label>
+                            <input type="text" id="customer" placeholder="Customer/Organization">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reason">Reason/Details</label>
+                            <input type="text" id="reason" placeholder="Purpose of expense">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="amount">Amount (₹)</label>
+                            <input type="number" id="amount" placeholder="0.00" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="lunch">Lunch (₹)</label>
+                            <input type="number" id="lunch" placeholder="0.00" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="kms">Distance (km)</label>
+                            <input type="number" id="kms" placeholder="0.0" step="0.1">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Add Expense</button>
+                        <button type="reset" class="btn btn-secondary">Clear</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Expense List -->
+            <section class="expense-list">
+                <div class="section-header">
+                    <h2>Your Expenses</h2>
+                    <div class="export-buttons">
+                        <button id="export-pdf" class="btn btn-export">Export to PDF</button>
+                        <button id="export-excel" class="btn btn-export">Export to Excel</button>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="expenses-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Mode</th>
+                                <th>Details</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Lunch</th>
+                                <th>Kms</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expenses-body">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6">Total</td>
+                                <td id="total-amount">₹0.00</td>
+                                <td id="total-lunch">₹0.00</td>
+                                <td id="total-kms">0.0 km</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <div id="auth-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div data-netlify-identity-menu></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Expense Tracker &copy; <span id="current-year"></span></p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@netlify/identity-widget@1.9.0/build/identity-widget.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="/src/auth.js" type="module"></script>
+    <script src="/src/expenses.js" type="module"></script>
+    <script src="/src/app.js" type="module"></script>
+</body>
+</html>
